@@ -94,13 +94,19 @@ Django version==4.0.6
 - 공식문서 참조를 통해 예제를 이해하고 프로젝트에 녹일 수 있도록 팀원들과 함께 노력하였습니다.
 - Docker를 활용해보고, SSL 인증과 함께 https 배포를 경험하였습니다.
   
-## 핵심기능
-
+## 핵심 기능
+초보 개발자 질의응답 커뮤니티인 거뮤니티<br>
+1. 회원가입 / 비회원도 게시글 조회는 가능<br>
+2. 게시판 작성<br>
+3. 답글 작성<br>
+4. 질문글 게시글 좋아요<br>
+5. 검색기능<br>
+	
 - [Serializer 활용 회원가입](https://github.com/kti0940/gomunity/blob/ee64543807ae13ed30f9a89c12044ec36dd9e883/user/views.py#L17)
 
 - [JWT Claim Custom](https://github.com/kti0940/gomunity/blob/ee64543807ae13ed30f9a89c12044ec36dd9e883/user/jwt_claim_serializer.py#L1)
 
-- [Serializer MethodField를 통해 원하는 데이터 조회](https://github.com/kti0940/gomunity/blob/ee64543807ae13ed30f9a89c12044ec36dd9e883/qna/serializers.py#L20)
+- [Serializer MethodField를 통해 필요한 데이터 조회](https://github.com/kti0940/gomunity/blob/ee64543807ae13ed30f9a89c12044ec36dd9e883/qna/serializers.py#L20)
 
 - [Serializer 활용 게시판CRUD](https://github.com/kti0940/gomunity/blob/ee64543807ae13ed30f9a89c12044ec36dd9e883/qna/views.py#L44)
 
