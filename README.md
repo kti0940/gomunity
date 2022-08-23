@@ -80,6 +80,20 @@
   - 회원 모델
   - 질의응답 게시글/답글/좋아요 모델
   - 자료게시판 게시글/답글/카테고리/좋아요 모델
+  
+## 핵심기능
+
+- [Serializer 활용 회원가입]([https://github.com/kti0940/gomunity/blob/ee64543807ae13ed30f9a89c12044ec36dd9e883/user/views.py#L17](https://github.com/kti0940/gomunity/blob/ee64543807ae13ed30f9a89c12044ec36dd9e883/user/views.py#L17))
+
+- [JWT Claim Custom]([https://github.com/kti0940/gomunity/blob/ee64543807ae13ed30f9a89c12044ec36dd9e883/user/jwt_claim_serializer.py#L1](https://github.com/kti0940/gomunity/blob/ee64543807ae13ed30f9a89c12044ec36dd9e883/user/jwt_claim_serializer.py#L1))
+
+- [Serializer MethodField를 통해 원하는 데이터 조회]([https://github.com/kti0940/gomunity/blob/ee64543807ae13ed30f9a89c12044ec36dd9e883/qna/serializers.py#L20](https://github.com/kti0940/gomunity/blob/ee64543807ae13ed30f9a89c12044ec36dd9e883/qna/serializers.py#L20))
+
+- [Serializer 활용 게시판CRUD]([https://github.com/kti0940/gomunity/blob/ee64543807ae13ed30f9a89c12044ec36dd9e883/qna/views.py#L44](https://github.com/kti0940/gomunity/blob/ee64543807ae13ed30f9a89c12044ec36dd9e883/qna/views.py#L44))
+
+- [게시글, 답글 좋아요 기능]([https://github.com/kti0940/gomunity/blob/ee64543807ae13ed30f9a89c12044ec36dd9e883/qna/views.py#L148](https://github.com/kti0940/gomunity/blob/ee64543807ae13ed30f9a89c12044ec36dd9e883/qna/views.py#L148))
+
+- [공식문서를 활용한 SearchView]([https://github.com/kti0940/gomunity/blob/ee64543807ae13ed30f9a89c12044ec36dd9e883/qna/views.py#L141](https://github.com/kti0940/gomunity/blob/ee64543807ae13ed30f9a89c12044ec36dd9e883/qna/views.py#L141))
     
 ## 프로젝트 트러블슈팅
 <details>
