@@ -71,7 +71,8 @@
 - AWS CloudFront으로 AWS SSL 인증서가 적용된 HTTPS 도메인으로 배포되어 있습니다.
 - 도메인은 Gabia를 사용하였습니다.
 
-## ERD
+## 개념적 / 논리적 ERD
+![개념적ERD](https://user-images.githubusercontent.com/61997714/186041498-c5108c51-6bd9-4d8c-b1cd-b271fa9c32f8.png)
 
 ![Gomunity](https://user-images.githubusercontent.com/97969957/185282933-80713a8e-cdf6-47c4-ba20-ef985fddf0d0.png)
 
