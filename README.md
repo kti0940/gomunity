@@ -243,7 +243,7 @@ def post(self, request):
 </details>
 	
 <details>
-<summary>urls.py path 경로 오류 (Reverse for 'urlname' not found)</summary>
+<summary>📌urls.py path 경로 오류 (Reverse for 'urlname' not found)</summary>
 <div markdown="1">
 
 # 🌧상황
