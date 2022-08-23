@@ -80,6 +80,55 @@
   - 회원 모델
   - 질의응답 게시글/답글/좋아요 모델
   - 자료게시판 게시글/답글/카테고리/좋아요 모델
+    
+## 트러블슈팅
+<details>
+<summary>DRF 시리얼라이저 데이터 리턴 과정 오류</summary>
+<div markdown="1">
+# 상황
+
+- DRF의 시리얼라이저를 통해서 데이터를 리턴해주려고 했는데 문제가 발생했다.
+- 시리얼라이저에 담아주고 싶은 데이터는 objects.all() 을 사용한 쿼리셋 데이터 형식이다
+
+```python
+.. 생략
+
+class View(APIView):
+	def get(self, request):
+		notices = NoticeModel.objects.all()
+		notice_serializer = NoticeSerializer(data=notices).data
+		return Response(notice_serializer)
+```
+
+# 오류코드
+
+- `Original exception text was: 'QuerySet' object has no attribute 'title'.`
+- 쿼리셋 오브젝트(다수의 오브젝트)는 제목이라는 속성이 없다.
+    - 왜냐하면 하나의 오브젝트에는 해당 속성이 있겠지만, 여러 개를 바라본다면 제대로 참조 할 수 없다
+
+# 트러블슈팅
+
+[[django] Serializer에 분명히 해당 필드가 있는데 없다고 하는 경우](https://dongza.tistory.com/20)
+
+- 단일 오브젝트가 아닌, 여러 개의 오브젝트인 쿼리셋을 받아주려면 many=True 를 추가로 작성해주어야 한다고 한다.
+
+# 해결
+
+- 시리얼라이저로 보내주는 데이터가 여러 개의 오브젝트인 쿼리셋이었다
+- 쿼리셋을 넘겨주기 위해서는 many=True 를 추가로 작성해주어야 한다
+- 작성해주었더니 해결되었음
+
+```python
+.. 생략
+
+class View(APIView):
+	def get(self, request):
+		notices = NoticeModel.objects.all()
+		notice_serializer = NoticeSerializer(data=notices).data
+		return Response(notice_serializer, many=True)
+```
+</div>
+</details>
 
 ## 서비스 플로우
 
