@@ -276,6 +276,110 @@ urlpatterns = [
 - 이틀동안 고생한것 치고는 사실상 왜 돼? 에서 출발했던 트러블슈팅이 이건 또 왜 돼? 로 끝나게 되었다, 그래도 문제를 끊임없이 파고들고 해결한 우리 팀원에게 칭찬해💚
 </div>
 </details>
+	
+<details>
+<summary>도커 numpy install 오류</summary>
+<div markdown="1">
+
+# 상황
+
+---
+
+- 도커 빌드를 통해 도커 컨테이너에 numpy를 설치하려 시도했으나 pip install 관련된 오류가 발생했다
+- pip install 이후 numpy 설치 과정에서 3~40분정도의 설치를 계속 시도하고있었고 결국 마지막엔 장문의 에러를 띄우며 설치가 진행되지않았다.
+
+```python
+ERROR: Failed building wheel for numpy
+Failed to build numpy
+```
+
+# 트러블 슈팅
+
+---
+
+### 시도 1
+
+- 구글링을 통해 확인해보니 M1 맥이나 윈도우등 특정 환경에 국한되어 나타나는 에러는 아니고 pip 버전이 낮을 때 발생할 수 있는 에러라는 글을 보게 되었고 pip 를 업그레이드 한 후 재시도를 하였다
+
+```python
+pip install --upgrade pip
+```
+
+- 그러나 결과는 마찬가지로 numpy 설치가 진행되지 않았다
+
+### 시도 2
+
+- 검색 후 현재 빌드하고있는 도커파일의 파이썬 버전은 python:3.8-alpine이였고 동일한 문제를 겪고있는 글을 확인하였고 알파인에서 numpy등을 빌드하는것은 용량에 문제가 된다는 것을 확인했다
+- Docker file에 아래와 같은 명령어를 통해 일부 캐시를 비워내며 진행하는것인가? 라고 생각했고 진행을 해보았다
+
+```python
+Run apk --no-cache add musl-dev linux-headers g++
+```
+
+- 결과는 마찬가지로 동일하게 실패했다
+
+### 시도 3
+
+- 2번의 시도와 함께 numpy의 버전이 현재 python 3.8.6과 충돌이 발생하는것은 아닐까? 라는 생각이 들었다
+- requirements 를 통해 numpy 를 인스톨하지 않고 직접 버전을 지정하여 진행해보기로 했다
+
+```python
+pip install numpy==1.19.1
+```
+
+- 결과는 실패했다
+
+# 해결
+
+---
+
+### 시도 4
+
+- dockerfile 빌드시 2번의 문제처럼 alpine과정에서 오류를 많이 겪는 사람들을 보게되었다
+- 설치가 전혀 불가능한것은 아니였지만 이문제를 해결하기위해 8시간이상의 트러블슈팅을 진행하고있던 찰나였기에 조금 우회할 필요가 있었다
+- 아래의 레퍼런스를 읽게되었고 alpine → buster 로 변경을 시도해보았다
+
+[Alpine, Slim, Stretch, Buster, Jessie, Bullseye, Bookworm - What are the Differences in Docker...](https://medium.com/swlh/alpine-slim-stretch-buster-jessie-bullseye-bookworm-what-are-the-differences-in-docker-62171ed4531d)
+
+```python
+# FROM python:3.8-alpine
+# ENV PYTHONDONTWRITEBYTECODE=1
+# ENV PYTHONUNBUFFERED=1
+
+# RUN apk update
+# RUN apk add build-base python3-dev py-pip jpeg-dev zlib-dev libpq-dev
+# # RUN apk --no-cache add build-base python3-dev py-pip jpeg-dev zlib-dev libpq-dev gcc gfortran musl-dev linux-headers g++ libffi-dev openssl-dev
+
+# COPY requirements.txt /usr/src/app/
+
+# WORKDIR /usr/src/app
+# RUN pip install -r requirements.txt
+
+# COPY . /usr/src/app/
+
+FROM python:3.8-buster
+ENV PYTHONDONTWRITEBYTECODE=1 
+ENV PYTHONUNBUFFERED=1 
+RUN apt-get update -y 
+RUN apt-get upgrade -y 
+RUN apt-get install -y ffmpeg libgl1-mesa-glx 
+COPY requirements.txt /usr/src/app/ 
+WORKDIR /usr/src/app 
+RUN pip install -r requirements.txt 
+COPY . /usr/src/app/
+```
+
+- 결과는 numpy가 잘 설치되었으며 이로 인해 게시물 추천 기능을 배포시에도 사용할 수 있게 되었다
+
+<aside>
+💡 잠정결론 : 경량화 버전인 alpine 아닌 buster버전을 사용함으로 용량에 대한 문제를 해결했다 라고 생각한다
+
+</aside>
+
+- 이 부분에 대해선 추후 Docker에 대한 딥한 공부를 통해 더 보충할 계획이다
+
+</div>
+</details>
 
 ## 서비스 플로우
 
