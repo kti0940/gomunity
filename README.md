@@ -241,6 +241,41 @@ def post(self, request):
 
 </div>
 </details>
+	
+<details>
+<summary>urls.py path 경로 오류 (Reverse for 'urlname' not found)</summary>
+<div markdown="1">
+
+# 🌧상황
+
+- 테스트 코드 작성을 위해 [urls.py](http://urls.py) 에 path 경로에 지정해둔 name을 활용하여 reverse를 통해 해당 경로를 불러오던 중 ‘Reverse for ‘urlname’ not found’라는 오류를 만나게 되었다
+- 기존에 user앱에서 테스트 코드를 진행했을 땐 name을 활용하여 reverse를 지정하여 아무런 문제가 없었기에 새로운 앱에서도 문제가 발생하리라고는 생각하지 못했는데 꽤나 당황스러웠다. 구글링을 통해 일단 기본 [urls.py](http://urls.py) 에 앱네이밍을 별도로 해주었고, reverse 내에도 앱네이밍을 연관지어 지정해주어 해결은 하였는데 user앱에서 처럼 별도로 앱네이밍을 지정해주지 않아도 잘 동작하는 코드들이 있어서 이유를 알고자 트러블 슈팅을 시도하게 되었다 (일명 왜 돼? 를 해결하기 위한 케이스)
+
+# 🛠오류코드
+
+```bash
+Reverse for 'notice' not found. 'notice' is not a valid view function or pattern name.
+```
+
+# 🚀트러블슈팅
+
+- 처음 시도해본 것은 네이밍의 문제가 아닐까 하여 list_notice 의 네임을 임의로 abc로 변경하여 진행해보았으나 마찬가지로 동일한 오류가 났다
+- 네이밍 문제는 아니라고 판단, 기존의 코드를 주석 처리 한 채 user app에서 진행한 것과 같이 동일하게 코드를 구성하여 진행 해보았다
+
+```python
+urlpatterns = [
+    path('webmaster/', include('webmaster.urls')),
+    # path('webmaster/', include(('webmaster.urls','webmaster'), namespace='webmaster')),
+]
+```
+
+- 그러자 기존의 오류 코드가 사라지고 잘 진행되는 것을 확인하게 되었는데, 생각해본 바 모종의 이유로 ‘visual studio상의 일시적인 에러 혹은 코드 사이에 눈에 보이지 않는 공백 같은 것이 존재했을 확률이 있었다’ 라고 잠정적으로 결론을 짓고 트러블 슈팅을 마치게 되었다
+
+# 👻느낀점
+
+- 이틀동안 고생한것 치고는 사실상 왜 돼? 에서 출발했던 트러블슈팅이 이건 또 왜 돼? 로 끝나게 되었다, 그래도 문제를 끊임없이 파고들고 해결한 우리 팀원에게 칭찬해💚
+</div>
+</details>
 
 ## 서비스 플로우
 
