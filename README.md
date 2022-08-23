@@ -23,6 +23,9 @@
     <img src="https://img.shields.io/badge/Django-092E20?style=for-the-badge&logo=Django&logoColor=white">
 <div>
 
+Python version==3.8.6
+Django version==4.0.6
+
 ## 데이터베이스
 
 <img src="https://img.shields.io/badge/PostgreSQL-4169E1?style=for-the-badge&logo=PostgreSQL&logoColor=white">
