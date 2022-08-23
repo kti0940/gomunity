@@ -218,6 +218,30 @@ def post(self, request):
 </div>
 </details>
 
+<details>
+<summary>모델 CASCADE, SET NULL 충돌</summary>
+<div markdown="1">
+
+# 상황
+
+- 배포 후 사용자 피드백을 받던 도중 500 error를 뱉으며 게시글 리스트 조회가 전부 되지 않았다
+- 메인페이지는 곧 얼굴인 상황에서 제일 큰 문제를 직면해서 적잖이 당황했다
+- 이유를 찾아보니 질문글의 모델을 구성할때 질문글과 답변, 좋아요 모델등이 set null 과 CASCADE로 혼용하여 설계한 상태였고, 이는 초기 테스트코드를 작성함에 있어서 CASCADE는 통과를 하지 못하고 set null은 통과가 되었기에 간과하고 지나간 부분이 우리의 발목을 잡았다
+- 로그를 확인하며 추측한 바 현재 생긴 오류는 유저가 삭제한 게시글에 답변과 좋아요가 남아있는 상태에서, set null값에 의해 존재하지 않는 글에 댓글과 좋아요값을 찾으면서 발생한 에러라고 추측하고 디버깅에 들어갔다
+
+# 트러블 슈팅
+
+- 금번 데이터베이스는 postgresql를 통해 구축을 하였기에 gui를 통해 db에 접근하여 set null 데이터를 삭제하려 시도하였으나 postgresql failed timeout expired 해당 오류를 뱉으면서 접속이 되지 않았다
+- 구글링을 통해 확인해보니 보안그룹에 관한 이슈인것같다는 글이 나왔고 AWS를 접속하여 확인해보니 보안그룹 설정에 postgresql은 설정이 되어있지 않았다
+- 인바운드 규칙에 PostgreSQL을 추가해주었고 포트는 5432포트로 규칙을 열어주었다
+
+![Untitled](https://user-images.githubusercontent.com/61997714/186050692-bea7f1e1-3361-49a4-b73a-5f7df8e06b7d.png)
+
+- 이후 서버 배포한 IP와 유저명, 패스워드로 접근하니 접근에 성공할 수 있었고, postgresql에서 set null 데이터들을 삭제하며 상황을 해결 할 수 있었다
+
+</div>
+</details>
+
 ## 서비스 플로우
 
 ### 회원기능
