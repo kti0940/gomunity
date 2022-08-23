@@ -129,9 +129,6 @@ class View(APIView):
 		return Response(notice_serializer, many=True)
 ```
 </div>
-</details>
-
-<details>
 <summary>DRF 시리얼라이저 새로운 필드 생성시 검증 통과 오류</summary>
 <div markdown="1">
 
