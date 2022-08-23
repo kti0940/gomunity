@@ -83,7 +83,7 @@
     
 ## 프로젝트 트러블슈팅
 <details>
-<summary>DRF 시리얼라이저 데이터 리턴 과정 오류</summary>
+<summary>📌DRF 시리얼라이저 데이터 리턴 과정 오류</summary>
 <div markdown="1">
 
 # 상황
@@ -132,7 +132,7 @@ class View(APIView):
 </details>
 	
 <details>
-<summary>DRF 시리얼라이저 새로운 필드 생성시 검증 통과 오류</summary>
+<summary>📌DRF 시리얼라이저 새로운 필드 생성시 검증 통과 오류</summary>
 <div markdown="1">
 
 # 상황
@@ -219,7 +219,7 @@ def post(self, request):
 </details>
 
 <details>
-<summary>모델 CASCADE, SET NULL 충돌</summary>
+<summary>📌모델 CASCADE, SET NULL 충돌</summary>
 <div markdown="1">
 
 # 상황
@@ -278,7 +278,7 @@ urlpatterns = [
 </details>
 	
 <details>
-<summary>도커 numpy install 오류</summary>
+<summary>🐳 도커 numpy install 오류</summary>
 <div markdown="1">
 
 # 상황
