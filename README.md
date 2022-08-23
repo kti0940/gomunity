@@ -132,10 +132,88 @@ class View(APIView):
 </details>
 	
 <details>
-<summary>토글 접기/펼치기</summary>
+<summary>DRF 시리얼라이저 새로운 필드 생성시 검증 통과 오류</summary>
 <div markdown="1">
 
-안녕
+# 상황
+
+- 질문글 상세 조회 뷰에서 특정 질문 글과 답글까지 출력하기 위해서 시리얼라이저에 코드를 적어주었다.
+
+```python
+from rest_framework import serializers
+from .models import QnAQuestion as QnAQuestionModel, QnAAnswer as QnAAnswerModel
+
+class AnswerSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = QnAAnswerModel
+		fields = "__all__"
+
+class QuestionSerializer(serializers.ModelSerializer):
+    answer = AnswerSerializer(many=True, source="qnaanswer_set")
+    class Meta:
+        model = QnAQuestionModel
+        fields = "__all__"
+```
+
+- 문제는 질문글을 작성하는 뷰에서 발생했다. 질문글을 작성할 때 제목과 내용을 입력받아 데이터베이스에 저장해야 하는데, 갑자기 웬 answer를 필수 값으로 받아야만 한다는 것이다!
+- 엥? 그럴리가 하면서 계속 찾았지만 오류가 어디서 뜨는 지 좀처럼 알 수 없는 상황!
+
+```python
+def post(self, request):
+        question_serializer = QuestionSerializer(data=request.data)
+        if question_serializer.is_valid():
+            question_serializer.save(user=self.request.user)
+            return Response({"message":"질문글 작성에 성공했다북!"})
+        else:
+            return Response({"message":"질문글 작성에 실패했다북..."})
+```
+
+# 코드
+
+`{'answer': [ErrorDetail(string='이 필드는 필수 항목입니다.', code='required`
+
+- answer라는 값을 입력할 때 필수로 받아야 한다는 뜻이었다. 질문글을 작성한 뒤에나 답글을 작성할 수 있는데 말이다…
+
+# 트러블슈팅
+
+- 위의 오류코드 조차도 볼 수 없었던 상황에서 오류를 찾기 위해 가장 먼저 한 것은 시리얼라이저가 제대로 검증되었는지 부터 파악할 필요가 있었다.
+- 시리얼라이저가 오류가 있는 지 보기 위해서 `print(question_serializer.errors)` 코드를 else 구문에 작성하여 검증이 통과하지 않는다면 오류를 보여주도록 했다.
+- answer 값은 조회를 위해서만 필요한건데, 작성할 때는 무시하게 할 수는 없나 하고 고민하면서 두 가지의 방법을 생각해냈다.
+1. 시리얼라이저를 새로 써준다
+    - 먼저 생각난 방법이지만 왠지 이렇게 하고 싶지는 않다. 케이스가 생겨날 때마다 시리얼라이저를 계속 만들어줘야 한다니..
+2. read_only 옵션을 넣는다
+    - 읽기만 가능하게 한다면 작성할 때는 자연스럽게 무시하지 않을까 하고 작성해보기로 했다
+
+# 해결
+
+read_only=True를 쓰면 조회에는 사용하고, 작성에는 사용하지 않는다. 읽기 옵션이기 때문에 시리얼라이저 검증을 거치지 않는다!
+
+```python
+from rest_framework import serializers
+from .models import QnAQuestion as QnAQuestionModel, QnAAnswer as QnAAnswerModel
+
+class AnswerSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = QnAAnswerModel
+		fields = "__all__"
+
+class QuestionSerializer(serializers.ModelSerializer):
+    answer = AnswerSerializer(many=True, source="qnaanswer_set", **read_only=True**)
+    class Meta:
+        model = QnAQuestionModel
+        fields = "__all__"
+```
+
+```python
+def post(self, request):
+        question_serializer = QuestionSerializer(data=request.data)
+        if question_serializer.is_valid():
+            question_serializer.save(user=self.request.user)
+            return Response({"message":"질문글 작성에 성공했다북!"})
+        else:
+						**print(question_serializer.errors)**
+            return Response({"message":"질문글 작성에 실패했다북..."})
+```
 
 </div>
 </details>
