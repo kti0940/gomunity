@@ -486,14 +486,12 @@ COPY . /usr/src/app/
 
 ---
 
-## [ver.1.0]()
+## [ver.1.0](https://github.com/tunEmvegnomb/gomunity/wiki/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EA%B1%B0%EB%AE%A4%EB%8B%88%ED%8B%B0-VER.1.0-SA)
 
-## [ver.1.1]()
+## [ver.1.2](https://github.com/tunEmvegnomb/gomunity/wiki/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EA%B1%B0%EB%AE%A4%EB%8B%88%ED%8B%B0-VER.1.2-SA)
 
-## [ver.1.2]()
+## [ver.1.2.1](https://github.com/tunEmvegnomb/gomunity/wiki/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EA%B1%B0%EB%AE%A4%EB%8B%88%ED%8B%B0-VER.1.2.1-SA)
 
-## [ver.1.2.1]()
+## [ver.1.3](https://github.com/tunEmvegnomb/gomunity/wiki/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EA%B1%B0%EB%AE%A4%EB%8B%88%ED%8B%B0-VER.1.3-SA)
 
-## [ver.1.3]()
-
-## [ver.1.4]()
+## [ver.1.4](https://github.com/tunEmvegnomb/gomunity/wiki/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EA%B1%B0%EB%AE%A4%EB%8B%88%ED%8B%B0-VER.1.4-SA)
