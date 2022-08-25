@@ -419,6 +419,16 @@ COPY . /usr/src/app/
 </div>
 </details>
 
+## 사용자 피드백
+![image](https://user-images.githubusercontent.com/61997714/186615379-763d2100-d284-48d4-aa1d-4553a6058593.png)
+
+![image](https://user-images.githubusercontent.com/61997714/186615327-434852f4-e792-45b4-bf18-c11be4543814.png)
+
+- 소비자 피드백을 통해 사이트 개선 및 서비스 보완 시도
+1. 로그인/회원가입 상태메세지 추가
+2. 마크다운 기능
+3. 자료게시판 추가
+
 ## 서비스 플로우
 
 ### 회원기능
