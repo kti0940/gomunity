@@ -88,6 +88,12 @@ djangorestframework==3.13.1
   - 질의응답 게시글/답글/좋아요 모델
   - 자료게시판 게시글/답글/카테고리/좋아요 모델
   
+## API
+- 노션 활용 API작성 
+![image](https://user-images.githubusercontent.com/61997714/187145778-06fd2f4b-d216-4980-8683-6e0d3cc47d54.png)
+
+![image](https://user-images.githubusercontent.com/61997714/187145813-105f28c0-d967-4def-a9ce-81c111857751.png)
+
 ## 프로젝트를 통한 성장 목표
 
 - ERD 구성에 항상 어려움을 느꼈었기에 개념적, 논리적, 물리적 ERD를 직접 Drawio에 그려가며 익혀갈 수 있도록 진행.
